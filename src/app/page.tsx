@@ -116,8 +116,8 @@ const Home = () => {
       <div className="w-1/2 h-full flex flex-col justify-center items-center gap-6 p-8 text-center bg-[#133040] rounded-r-4xl rounded-bl-[5rem]">
         <h2 className="text-3xl font-bold text-white">Results shown here</h2>
         <span className="font-bold text-[#87a3b8]">
-          Complete the form and click "calculate repayments" to see what your
-          monthly repayments would be.
+          Complete the form and click &quot;calculate repayments&quot; to see
+          what your monthly repayments would be.
         </span>
       </div>
     </div>
