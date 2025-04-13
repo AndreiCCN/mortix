@@ -5,6 +5,7 @@ import RadioOption from "@/components/RadioOption";
 import calculateMonthlyPayment from "@/utils/calculateMonthlyPayment";
 
 const Home = () => {
+  // eslint-disable-next-line
   const handleCalculate = (e: any) => {
     e.preventDefault();
     const monthlyPayment = calculateMonthlyPayment(
