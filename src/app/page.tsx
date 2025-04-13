@@ -7,17 +7,39 @@ import { useState } from "react";
 
 const Home = () => {
   const [showResults, setShowResults] = useState(false);
+  const [monthlyRepayment, setMonthlyRepayment] = useState("");
+  const [totalRepayment, setTotalRepayment] = useState("");
 
   // eslint-disable-next-line
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(e.target.elements.mortgageType.value);
-    const monthlyPayment = calculateMonthlyPayment(
-      e.target.elements.mortgageAmount.value,
-      e.target.elements.mortgageTerm.value,
-      e.target.elements.interestRate.value
+    let monthlyPayment = 0;
+    if (e.target.elements.mortgageType.value === "repayment") {
+      monthlyPayment = calculateMonthlyPayment(
+        e.target.elements.mortgageAmount.value,
+        e.target.elements.mortgageTerm.value,
+        e.target.elements.interestRate.value
+      );
+      setTotalRepayment(
+        (
+          monthlyPayment *
+          e.target.elements.mortgageTerm.value *
+          12
+        ).toLocaleString("en-US", {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        })
+      );
+    } else if (e.target.elements.mortgageType.value === "interestOnly") {
+      monthlyPayment = 0;
+      setTotalRepayment("");
+    }
+    setMonthlyRepayment(
+      monthlyPayment.toLocaleString("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+      })
     );
-    console.log(monthlyPayment);
     setShowResults(true);
   };
 
@@ -26,6 +48,8 @@ const Home = () => {
     if (form) {
       form.reset();
     }
+    setMonthlyRepayment("");
+    setTotalRepayment("");
     setShowResults(false);
   };
 
@@ -108,12 +132,16 @@ const Home = () => {
             : 'Complete the form and click "calculate repayments" to see what your monthly repayments would be.'}
         </span>
         {showResults && (
-          <div className="w-full flex flex-col justify-center items-center gap-4 p-8 bg-[#0e2532] text-xl text-[#87a3b8] font-bold rounded-4xl">
+          <div className="w-full flex flex-col justify-center items-center gap-4 p-8 bg-[#0e2532] text-xl text-[#87a3b8] font-bold rounded-4xl shadow-[inset_0_20px_0_-10px_#dddf35]">
             <span>Your monthly repayments</span>
-            <h1 className="text-7xl text-[#dddf35]">$ 1,797.74</h1>
-            <hr className="w-full my-4 border-[#87a3b8]" />
-            <span>Total you&apos;ll repay over the term</span>
-            <h2 className="text-3xl text-white">$ 539,322.94</h2>
+            <h1 className="text-7xl text-[#dddf35]">{`$ ${monthlyRepayment}`}</h1>
+            {totalRepayment && (
+              <>
+                <hr className="w-full my-4 border-[#87a3b8]" />
+                <span>Total you&apos;ll repay over the term</span>
+                <h2 className="text-3xl text-white">{`$ ${totalRepayment}`}</h2>
+              </>
+            )}
           </div>
         )}
       </div>
