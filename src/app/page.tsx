@@ -3,27 +3,44 @@
 import InputGroup from "@/components/InputGroup";
 import RadioOption from "@/components/RadioOption";
 import calculateMonthlyPayment from "@/utils/calculateMonthlyPayment";
+import { useState } from "react";
 
 const Home = () => {
+  const [showResults, setShowResults] = useState(false);
+
   // eslint-disable-next-line
-  const handleCalculate = (e: any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
+    console.log(e.target.elements.mortgageType.value);
     const monthlyPayment = calculateMonthlyPayment(
       e.target.elements.mortgageAmount.value,
       e.target.elements.mortgageTerm.value,
       e.target.elements.interestRate.value
     );
     console.log(monthlyPayment);
+    setShowResults(true);
   };
+
+  const clearAllFields = () => {
+    const form = document.querySelector("form");
+    if (form) {
+      form.reset();
+    }
+    setShowResults(false);
+  };
+
   return (
     <div className="w-8/9 min-h-[610px] h-[610px] flex flex-row bg-white rounded-4xl">
       <form
-        onSubmit={handleCalculate}
+        onSubmit={handleSubmit}
         className="w-1/2 h-full flex flex-col justify-between gap-8 p-8 bg-white rounded-l-4xl"
       >
         <div className="flex flex-row justify-between items-center">
           <h1 className="text-3xl font-bold">Mortgage Calculator</h1>
-          <p className="text-[#87a3b8] cursor-pointer underline transition-all duration-300 ease-in-out hover:text-[#133040]">
+          <p
+            onClick={clearAllFields}
+            className="text-[#87a3b8] cursor-pointer underline transition-all duration-300 ease-in-out hover:text-[#133040]"
+          >
             Clear All
           </p>
         </div>
@@ -77,12 +94,28 @@ const Home = () => {
           <p className="text-xl font-bold">Calculate Repayments</p>
         </button>
       </form>
-      <div className="w-1/2 h-full flex flex-col justify-center items-center gap-6 p-8 text-center bg-[#133040] rounded-r-4xl rounded-bl-[5rem]">
-        <h2 className="text-3xl font-bold text-white">Results shown here</h2>
-        <span className="font-bold text-[#87a3b8]">
-          Complete the form and click &quot;calculate repayments&quot; to see
-          what your monthly repayments would be.
+      <div
+        className={`${
+          showResults ? "justify-evenly" : "justify-center"
+        } w-1/2 h-full flex flex-col items-center gap-6 p-8 bg-[#133040] text-center rounded-r-4xl rounded-bl-[5rem] `}
+      >
+        <h2 className="w-full text-3xl font-bold text-white">
+          {showResults ? "Your results" : "Results shown here"}
+        </h2>
+        <span className="w-full text-xl font-bold text-[#87a3b8]">
+          {showResults
+            ? 'Your results are shown below based on the information you provided. To adjus the results, edit the form and click "calculate repayments" again.'
+            : 'Complete the form and click "calculate repayments" to see what your monthly repayments would be.'}
         </span>
+        {showResults && (
+          <div className="w-full flex flex-col justify-center items-center gap-4 p-8 bg-[#0e2532] text-xl text-[#87a3b8] font-bold rounded-4xl">
+            <span>Your monthly repayments</span>
+            <h1 className="text-7xl text-[#dddf35]">$ 1,797.74</h1>
+            <hr className="w-full my-4 border-[#87a3b8]" />
+            <span>Total you&apos;ll repay over the term</span>
+            <h2 className="text-3xl text-white">$ 539,322.94</h2>
+          </div>
+        )}
       </div>
     </div>
   );
