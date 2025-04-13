@@ -1,10 +1,14 @@
 const InputGroup = ({
   label,
   inputIcon,
+  inputName,
+  inputStep,
   reverseOrder,
 }: {
   label: string;
   inputIcon: string;
+  inputName: string;
+  inputStep: number;
   reverseOrder: boolean;
 }) => {
   return (
@@ -24,6 +28,10 @@ const InputGroup = ({
         </p>
         <input
           type="number"
+          required
+          min={0}
+          step={inputStep}
+          name={inputName}
           className="w-full h-full px-3 text-lg font-semibold outline-none"
         />
       </div>

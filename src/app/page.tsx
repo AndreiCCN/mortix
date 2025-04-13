@@ -2,11 +2,24 @@
 
 import InputGroup from "@/components/InputGroup";
 import RadioOption from "@/components/RadioOption";
+import calculateMonthlyPayment from "@/utils/calculateMonthlyPayment";
 
 const Home = () => {
+  const handleCalculate = (e: any) => {
+    e.preventDefault();
+    const monthlyPayment = calculateMonthlyPayment(
+      e.target.elements.mortgageAmount.value,
+      e.target.elements.mortgageTerm.value,
+      e.target.elements.interestRate.value
+    );
+    console.log(monthlyPayment);
+  };
   return (
     <div className="w-8/9 min-h-[610px] h-[610px] flex flex-row bg-white rounded-4xl">
-      <div className="w-1/2 h-full flex flex-col justify-between gap-8 p-8 bg-white rounded-l-4xl">
+      <form
+        onSubmit={handleCalculate}
+        className="w-1/2 h-full flex flex-col justify-between gap-8 p-8 bg-white rounded-l-4xl"
+      >
         <div className="flex flex-row justify-between items-center">
           <h1 className="text-3xl font-bold">Mortgage Calculator</h1>
           <p className="text-[#87a3b8] cursor-pointer underline transition-all duration-300 ease-in-out hover:text-[#133040]">
@@ -16,15 +29,25 @@ const Home = () => {
         <InputGroup
           label="Mortgage Amount"
           inputIcon="$"
+          inputName="mortgageAmount"
+          inputStep={1000}
           reverseOrder={false}
         />
         <div className="flex flex-row gap-4">
           <InputGroup
             label="Mortgage Term"
             inputIcon="years"
+            inputName="mortgageTerm"
+            inputStep={1}
             reverseOrder={true}
           />
-          <InputGroup label="Interest Rate" inputIcon="%" reverseOrder={true} />
+          <InputGroup
+            label="Interest Rate"
+            inputIcon="%"
+            inputName="interestRate"
+            inputStep={0.01}
+            reverseOrder={true}
+          />
         </div>
         <div className="flex flex-col gap-2">
           <p className="text-[#87a3b8] font-bold">Mortgage Type</p>
@@ -42,7 +65,7 @@ const Home = () => {
           />
         </div>
         <button
-          type="button"
+          type="submit"
           className="w-fit flex flex-row items-center self-center gap-4 px-6 py-4 bg-[#dddf35] rounded-full cursor-pointer transition-all duration-300 ease-in-out"
         >
           <i className="w-[20px] h-[20px]">
@@ -52,7 +75,7 @@ const Home = () => {
           </i>
           <p className="text-xl font-bold">Calculate Repayments</p>
         </button>
-      </div>
+      </form>
       <div className="w-1/2 h-full flex flex-col justify-center items-center gap-6 p-8 text-center bg-[#133040] rounded-r-4xl rounded-bl-[5rem]">
         <h2 className="text-3xl font-bold text-white">Results shown here</h2>
         <span className="font-bold text-[#87a3b8]">
