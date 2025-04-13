@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${jetbrainsMono.variable} antialiased`}
+        className={`${jetbrainsMono.variable} flex justify-center items-center antialiased container mx-auto py-20 bg-[#e3f4fc]`}
       >
         {children}
       </body>

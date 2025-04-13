@@ -1,103 +1,127 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+const InputGroup = ({
+  label,
+  inputIcon,
+  reverseOrder,
+}: {
+  label: string;
+  inputIcon: string;
+  reverseOrder: boolean;
+}) => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    <div className="w-full flex flex-col gap-2">
+      <p className="text-[#87a3b8] font-bold">{label}</p>
+      <div
+        className={`${
+          reverseOrder ? "flex-row-reverse" : "flex-row"
+        } w-full flex items-center border-1 border-[#87a3b8] rounded-lg`}
+      >
+        <p
+          className={`${
+            reverseOrder ? "rounded-r-lg" : "rounded-l-lg"
+          } px-4 py-3 text-xl font-bold bg-[#e3f4fc]`}
+        >
+          {inputIcon}
+        </p>
+        <input
+          type="number"
+          className="w-full h-full px-3 text-lg font-semibold outline-none"
         />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
   );
-}
+};
+
+const RadioOption = ({
+  inputId,
+  inputValue,
+  inputName,
+  inputLabel,
+}: {
+  inputId: string;
+  inputValue: string;
+  inputName: string;
+  inputLabel: string;
+}) => {
+  return (
+    <div className="flex flex-row items-center gap-3 rounded-lg border border-[#87a3b8] cursor-pointer transition-all duration-300 ease-in-out hover:border-[#133040]">
+      <input
+        type="radio"
+        id={inputId}
+        value={inputValue}
+        name={inputName}
+        className="w-[20px] h-[20px] ml-4 my-3 cursor-pointer border-[#133040] transition-all duration-300 ease-in-out appearance-none rounded-full border-2 checked:bg-[#133040] checked:border-[#133040] focus:outline-none"
+      />
+      <label
+        htmlFor={inputId}
+        className="w-full pr-4 py-3 text-lg font-bold cursor-pointer"
+      >
+        {inputLabel}
+      </label>
+    </div>
+  );
+};
+
+const Home = () => {
+  return (
+    <div className="w-8/9 min-h-[610px] h-[610px] flex flex-row bg-white rounded-4xl">
+      <div className="w-1/2 h-full flex flex-col justify-between gap-8 p-8 bg-white rounded-l-4xl">
+        <div className="flex flex-row justify-between items-center">
+          <h1 className="text-3xl font-bold">Mortgage Calculator</h1>
+          <p className="text-[#87a3b8] cursor-pointer underline transition-all duration-300 ease-in-out hover:text-[#133040]">
+            Clear All
+          </p>
+        </div>
+        <InputGroup
+          label="Mortgage Amount"
+          inputIcon="$"
+          reverseOrder={false}
+        />
+        <div className="flex flex-row gap-4">
+          <InputGroup
+            label="Mortgage Term"
+            inputIcon="years"
+            reverseOrder={true}
+          />
+          <InputGroup label="Interest Rate" inputIcon="%" reverseOrder={true} />
+        </div>
+        <div className="flex flex-col gap-2">
+          <p className="text-[#87a3b8] font-bold">Mortgage Type</p>
+          <RadioOption
+            inputName="mortgageType"
+            inputId="repayment"
+            inputLabel="Repayment"
+            inputValue="repayment"
+          />
+          <RadioOption
+            inputName="mortgageType"
+            inputId="interestOnly"
+            inputLabel="Interest Only"
+            inputValue="interestOnly"
+          />
+        </div>
+        <button
+          type="button"
+          className="w-fit flex flex-row items-center self-center gap-4 px-6 py-4 bg-[#dddf35] rounded-full cursor-pointer transition-all duration-300 ease-in-out"
+        >
+          <i className="w-[20px] h-[20px]">
+            <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 2c0-1.1.9-2 2-2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm3 1v2h10V3H5zm0 4v2h2V7H5zm4 0v2h2V7H9zm4 0v2h2V7h-2zm-8 4v2h2v-2H5zm4 0v2h2v-2H9zm4 0v6h2v-6h-2zm-8 4v2h2v-2H5zm4 0v2h2v-2H9z" />
+            </svg>
+          </i>
+          <p className="text-xl font-bold">Calculate Repayments</p>
+        </button>
+      </div>
+      <div className="w-1/2 h-full flex flex-col justify-center items-center gap-6 p-8 text-center bg-[#133040] rounded-r-4xl rounded-bl-[5rem]">
+        <h2 className="text-3xl font-bold text-white">Results shown here</h2>
+        <span className="font-bold text-[#87a3b8]">
+          Complete the form and click "calculate repayments" to see what your
+          monthly repayments would be.
+        </span>
+      </div>
+    </div>
+  );
+};
+
+export default Home;
