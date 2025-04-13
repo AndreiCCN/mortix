@@ -2,6 +2,7 @@
 
 import InputGroup from "@/components/InputGroup";
 import RadioOption from "@/components/RadioOption";
+import calculateInterestOnly from "@/utils/calculateInterestOnly";
 import calculateMonthlyPayment from "@/utils/calculateMonthlyPayment";
 import { useState } from "react";
 
@@ -31,7 +32,10 @@ const Home = () => {
         })
       );
     } else if (e.target.elements.mortgageType.value === "interestOnly") {
-      monthlyPayment = 0;
+      monthlyPayment = calculateInterestOnly(
+        e.target.elements.mortgageAmount.value,
+        e.target.elements.interestRate.value
+      );
       setTotalRepayment("");
     }
     setMonthlyRepayment(
